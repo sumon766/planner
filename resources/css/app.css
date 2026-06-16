@@ -59,3 +59,60 @@ body {
     margin-left: 260px;
     padding: 20px;
 }
+
+.sidebar-dropdown a {
+    color: #cbd5e1;
+    text-decoration: none;
+    display: block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin: 4px 12px;
+    font-size: 14px;
+}
+
+.sidebar-dropdown a:hover {
+    background: #1f2937;
+    color: #fff;
+}
+
+.sidebar-sublink {
+    font-size: 13px;
+    padding-left: 30px !important;
+    margin: 2px 12px !important;
+    opacity: 0.9;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.dropdown-arrow {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+    color: #6b7280;
+}
+
+/* Default state */
+.dropdown-arrow {
+    transform: rotate(0deg);
+}
+
+a[aria-expanded="true"] .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.sidebar-toggle .arrow {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+    color: #6b7280;
+}
+
+/* default */
+.sidebar-toggle .arrow {
+    transform: rotate(0deg);
+}
+
+/* when collapse is open */
+.sidebar-toggle[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+}

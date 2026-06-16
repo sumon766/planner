@@ -17,14 +17,121 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
+
     <div class="sidebar-brand">
-        {{ config('app.name', 'Daily Planner') }}
+        {{ config('app.name', 'Planner') }}
     </div>
 
-    <a href="#">Dashboard</a>
-    <a href="#">Users</a>
-    <a href="#">Projects</a>
-    <a href="#">Settings</a>
+    <!-- Dashboard -->
+    <a href="{{ route('dashboard') }}">
+        <i class="fa-solid fa-gauge me-2"></i>
+        Dashboard
+    </a>
+
+    <!-- Routine Tasks -->
+    <div class="sidebar-dropdown">
+
+        <a href="#routineTasksMenu"
+           data-bs-toggle="collapse"
+           class="d-flex justify-content-between align-items-center sidebar-toggle">
+
+            <span>
+                <i class="fa-solid fa-list-check me-2"></i>
+                Routine Tasks
+            </span>
+
+            <i class="fa-solid fa-chevron-down arrow"></i>
+        </a>
+
+        <div class="collapse ps-3" id="routineTasksMenu">
+
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-regular fa-circle me-2"></i>
+                All Routine Tasks
+            </a>
+
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-solid fa-plus me-2"></i>
+                Add New Task
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Extra Tasks -->
+    <div class="sidebar-dropdown">
+
+        <a href="#extraTasksMenu"
+           data-bs-toggle="collapse"
+           class="d-flex justify-content-between align-items-center sidebar-toggle">
+
+            <span>
+                <i class="fa-solid fa-bolt me-2"></i>
+                Extra Tasks
+            </span>
+
+            <i class="fa-solid fa-chevron-down arrow"></i>
+        </a>
+
+        <div class="collapse ps-3" id="extraTasksMenu">
+
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-regular fa-circle me-2"></i>
+                All Extra Tasks
+            </a>
+
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-solid fa-plus me-2"></i>
+                Add New Task
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Accounts -->
+    <div class="sidebar-dropdown">
+
+        <a href="#accountsMenu"
+           data-bs-toggle="collapse"
+           class="d-flex justify-content-between align-items-center sidebar-toggle">
+
+        <span>
+            <i class="fa-solid fa-wallet me-2"></i>
+            Accounts
+        </span>
+
+            <i class="fa-solid fa-chevron-down arrow"></i>
+        </a>
+
+        <div class="collapse ps-3" id="accountsMenu">
+
+            <!-- Add Expense -->
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-solid fa-money-bill-transfer me-2"></i>
+                Add Expense
+            </a>
+
+            <!-- Balance / Report -->
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-solid fa-chart-line me-2"></i>
+                Balance / Report
+            </a>
+
+            <!-- Expense Category -->
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-solid fa-tags me-2"></i>
+                Expense Categories
+            </a>
+
+            <!-- Add Balance -->
+            <a href="#" class="sidebar-sublink">
+                <i class="fa-solid fa-circle-plus me-2"></i>
+                Add Balance
+            </a>
+
+        </div>
+    </div>
+
 </div>
 
 <!-- Topbar -->
@@ -34,7 +141,7 @@
     </div>
 
     <div class="dropdown">
-        <a class="d-flex align-items-center text-decoration-none dropdown-toggle"
+        <a class="d-flex align-items-center text-decoration-none"
            href="#"
            id="userDropdown"
            data-bs-toggle="dropdown"
@@ -49,14 +156,18 @@
                  style="object-fit: cover;">
 
             <!-- Name -->
-            <div class="d-flex flex-column text-start">
-            <span class="fw-semibold text-dark" style="font-size: 14px;">
-                {{ Auth::user()->name }}
-            </span>
+            <div class="d-flex flex-column text-start me-2">
+        <span class="fw-semibold text-dark" style="font-size: 14px;">
+            {{ Auth::user()->name }}
+        </span>
                 <small class="text-muted" style="font-size: 12px;">
                     Account
                 </small>
             </div>
+
+            <!-- Arrow -->
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+
         </a>
 
         <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
