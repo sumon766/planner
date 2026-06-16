@@ -37,52 +37,104 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <form wire:submit="register">
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+
+            <!-- Left Panel -->
+            <div class="col-lg-7 d-none d-lg-flex align-items-center justify-content-center text-white"
+                 style="background: linear-gradient(135deg, #0f172a, #1f2937);">
+
+                <div class="text-center px-5">
+                    <h1 class="fw-bold mb-3">Create Your Account 🚀</h1>
+                    <p class="text-white-50">
+                        Start managing your dashboard, tasks and users in minutes.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Right Panel -->
+            <div class="col-lg-5 d-flex align-items-center justify-content-center bg-light">
+
+                <div class="card border-0 shadow-lg p-4 p-md-5 w-100"
+                     style="max-width: 440px; border-radius: 16px;">
+
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold">{{ config('app.name', 'Planner') }}</h4>
+                        <small class="text-muted">Create a new account</small>
+                    </div>
+
+                    <form wire:submit="register">
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text"
+                                   wire:model="name"
+                                   class="form-control form-control-lg"
+                                   placeholder="Your name">
+                            @error('name')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   wire:model="email"
+                                   class="form-control form-control-lg"
+                                   placeholder="you@example.com">
+                            @error('email')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password"
+                                   wire:model="password"
+                                   class="form-control form-control-lg"
+                                   placeholder="••••••••">
+                            @error('password')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password"
+                                   wire:model="password_confirmation"
+                                   class="form-control form-control-lg"
+                                   placeholder="••••••••">
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <a href="{{ route('login') }}"
+                               class="text-decoration-none small text-primary"
+                               wire:navigate>
+                                Already have an account?
+                            </a>
+
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                class="btn btn-dark btn-lg w-100">
+                            Create Account
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
         </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </div>

@@ -39,41 +39,85 @@ new class extends Component
 }; ?>
 
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
-        </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
-        </p>
-    </header>
+    <h5 class="fw-semibold mb-1">Update Password</h5>
+    <p class="text-muted small mb-3">
+        Ensure your account is using a strong password for better security.
+    </p>
 
-    <form wire:submit="updatePassword" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
+    <form wire:submit.prevent="updatePassword">
+
+        <!-- Current Password -->
+        <div class="mb-3">
+            <label class="form-label">Current Password</label>
+            <input type="password"
+                   wire:model="current_password"
+                   class="form-control"
+                   placeholder="Enter current password">
+
+            @error('current_password')
+            <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input wire:model="password" id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <!-- New Password -->
+        <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input type="password"
+                   wire:model="password"
+                   class="form-control"
+                   placeholder="Enter new password">
+
+            @error('password')
+            <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <!-- Confirm Password -->
+        <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            <input type="password"
+                   wire:model="password_confirmation"
+                   class="form-control"
+                   placeholder="Confirm new password">
+
+            @error('password_confirmation')
+            <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <!-- Actions -->
+        <div class="d-flex align-items-center gap-3">
 
-            <x-action-message class="me-3" on="password-updated">
-                {{ __('Saved.') }}
-            </x-action-message>
+            <!-- Save Button -->
+            <button type="submit"
+                    class="btn btn-dark"
+                    wire:loading.attr="disabled">
+
+                <span wire:loading.remove>Save Changes</span>
+                <span wire:loading>Updating...</span>
+
+            </button>
+
+            <!-- Success message -->
+            <div x-data="{ show: false }"
+                 x-on:password-updated.window="show = true; setTimeout(() => show = false, 3000)"
+                 x-show="show"
+                 x-transition
+                 class="alert alert-success py-2 small mt-2 mb-0">
+                Password updated successfully.
+            </div>
+
+            <!-- Livewire event listener replacement -->
+            <div x-data="{ show: false }"
+                 x-on:password-updated.window="show = true; setTimeout(() => show = false, 2000)"
+                 x-show="show"
+                 class="text-success small">
+                Password updated successfully.
+            </div>
+
         </div>
+
     </form>
+
 </section>

@@ -37,25 +37,83 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+
+            <!-- Left Panel -->
+            <div class="col-lg-7 d-none d-lg-flex align-items-center justify-content-center text-white"
+                 style="background: linear-gradient(135deg, #0f172a, #1f2937);">
+
+                <div class="text-center px-5">
+                    <h1 class="fw-bold mb-3">Forgot Password? 🔐</h1>
+                    <p class="text-white-50">
+                        No worries. We’ll send you a reset link to regain access to your account.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Right Panel -->
+            <div class="col-lg-5 d-flex align-items-center justify-content-center bg-light">
+
+                <div class="card border-0 shadow-lg p-4 p-md-5 w-100"
+                     style="max-width: 420px; border-radius: 16px;">
+
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold">{{ config('app.name', 'Planner') }}</h4>
+                        <small class="text-muted">Reset your password</small>
+                    </div>
+
+                    <!-- Info text -->
+                    <p class="text-muted small text-center mb-3">
+                        Enter your email address and we’ll send you a reset link.
+                    </p>
+
+                    <!-- Success message -->
+                    @if (session('status'))
+                        <div class="alert alert-success py-2 small">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form wire:submit="sendPasswordResetLink">
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email"
+                                   wire:model="email"
+                                   class="form-control form-control-lg"
+                                   placeholder="you@example.com"
+                                   required>
+
+                            @error('email')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                class="btn btn-dark btn-lg w-100">
+                            Send Reset Link
+                        </button>
+
+                    </form>
+
+                    <!-- Back to login -->
+                    <div class="text-center mt-3">
+                        <a href="{{ route('login') }}"
+                           class="text-decoration-none small text-primary"
+                           wire:navigate>
+                            ← Back to login
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form wire:submit="sendPasswordResetLink">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
 </div>

@@ -7,72 +7,10 @@
 
     <title>{{ config('app.name', 'Admin Panel') }}</title>
 
-    <!-- Google Font (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Vite (custom CSS/JS) -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Bootstrap 5.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f4f6f9;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            min-height: 100vh;
-            background: #111827; /* dark modern navy */
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding-top: 20px;
-        }
-
-        .sidebar a {
-            color: #cbd5e1;
-            text-decoration: none;
-            display: block;
-            padding: 12px 20px;
-            border-radius: 10px;
-            margin: 4px 12px;
-            font-size: 14px;
-        }
-
-        .sidebar a:hover {
-            background: #1f2937;
-            color: #fff;
-        }
-
-        .sidebar-brand {
-            color: #fff;
-            font-weight: 600;
-            font-size: 18px;
-            padding: 0 20px 20px;
-        }
-
-        /* Topbar */
-        .topbar {
-            height: 60px;
-            background: #fff;
-            border-bottom: 1px solid #e5e7eb;
-            margin-left: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        /* Content */
-        .main-content {
-            margin-left: 260px;
-            padding: 20px;
-        }
-    </style>
+    @livewireStyles
 </head>
 
 <body>
@@ -80,7 +18,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="sidebar-brand">
-        {{ config('app.name', 'Admin') }}
+        {{ config('app.name', 'Daily Planner') }}
     </div>
 
     <a href="#">Dashboard</a>
@@ -126,7 +64,7 @@
             style="min-width: 220px;">
 
             <li>
-                <a class="dropdown-item py-2" href="#">
+                <a class="dropdown-item py-2" href="{{ route('profile') }}">
                     Profile
                 </a>
             </li>
@@ -162,8 +100,6 @@
     @yield('content')
 </main>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
+@livewireScripts
 </body>
 </html>

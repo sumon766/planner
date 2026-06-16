@@ -70,36 +70,106 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <form wire:submit="resetPassword">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+
+            <!-- Left Panel -->
+            <div class="col-lg-7 d-none d-lg-flex align-items-center justify-content-center text-white"
+                 style="background: linear-gradient(135deg, #0f172a, #1f2937);">
+
+                <div class="text-center px-5">
+                    <h1 class="fw-bold mb-3">Reset Your Password 🔒</h1>
+                    <p class="text-white-50">
+                        Choose a strong password to secure your account again.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Right Panel -->
+            <div class="col-lg-5 d-flex align-items-center justify-content-center bg-light">
+
+                <div class="card border-0 shadow-lg p-4 p-md-5 w-100"
+                     style="max-width: 420px; border-radius: 16px;">
+
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold">{{ config('app.name', 'Planner') }}</h4>
+                        <small class="text-muted">Set your new password</small>
+                    </div>
+
+                    <!-- Status message -->
+                    @if (session('status'))
+                        <div class="alert alert-success py-2 small">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form wire:submit="resetPassword">
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email"
+                                   wire:model="email"
+                                   class="form-control form-control-lg"
+                                   placeholder="you@example.com"
+                                   required>
+
+                            @error('email')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input type="password"
+                                   wire:model="password"
+                                   class="form-control form-control-lg"
+                                   placeholder="••••••••"
+                                   required>
+
+                            @error('password')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password"
+                                   wire:model="password_confirmation"
+                                   class="form-control form-control-lg"
+                                   placeholder="••••••••"
+                                   required>
+
+                            @error('password_confirmation')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                class="btn btn-dark btn-lg w-100">
+                            Reset Password
+                        </button>
+
+                    </form>
+
+                    <!-- Back to login -->
+                    <div class="text-center mt-3">
+                        <a href="{{ route('login') }}"
+                           class="text-decoration-none small text-primary"
+                           wire:navigate>
+                            ← Back to login
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                          type="password"
-                          name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </div>
