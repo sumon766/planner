@@ -1,3 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
+//Timer for tasks
+document.addEventListener('livewire:init', () => {
+    // Timer polling for running timers
+    Livewire.on('timer-started', (event) => {
+        // You can add additional logic here if needed
+    });
+
+    Livewire.on('timer-stopped', (event) => {
+        // You can add additional logic here if needed
+    });
+});
