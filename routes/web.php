@@ -5,13 +5,19 @@ use Illuminate\Support\Facades\Auth;
 
 Route::redirect('/', '/login');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::view('profile', 'profile')->name('profile');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+    //Routine Task Routes
+    Route::get('/routine-tasks', function () {
+        return view('routine-tasks.index');
+    })->name('routine-tasks.index');
+
+    Route::get('/routine-tasks/create', function () {
+        return view('routine-tasks.create');
+    })->name('routine-tasks.create');
+});
 
 Route::post('/logout', function () {
     Auth::logout();

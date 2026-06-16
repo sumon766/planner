@@ -17,6 +17,15 @@ body {
     padding-top: 20px;
 }
 
+.sidebar-brand .brand-name {
+    font-size: 25px;
+    padding: 3px;
+}
+
+.sidebar-brand .brand-name:hover {
+    background: none;
+}
+
 .sidebar a {
     color: #cbd5e1;
     text-decoration: none;

@@ -19,7 +19,7 @@
 <div class="sidebar">
 
     <div class="sidebar-brand">
-        {{ config('app.name', 'Planner') }}
+        <a class="brand-name" href="{{ route('dashboard') }}">Daily Planner</a>
     </div>
 
     <!-- Dashboard -->
@@ -45,12 +45,12 @@
 
         <div class="collapse ps-3" id="routineTasksMenu">
 
-            <a href="#" class="sidebar-sublink">
+            <a href="{{ route('routine-tasks.index') }}" class="sidebar-sublink">
                 <i class="fa-regular fa-circle me-2"></i>
                 All Routine Tasks
             </a>
 
-            <a href="#" class="sidebar-sublink">
+            <a href="{{ route('routine-tasks.create') }}" class="sidebar-sublink">
                 <i class="fa-solid fa-plus me-2"></i>
                 Add New Task
             </a>
