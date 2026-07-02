@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Sticky Header -->
-    <div class="sticky-top bg-white border-bottom shadow-sm" style="top: 60px; z-index: 1020;">
+    <div class="sticky-top bg-white border-bottom shadow-sm" style="top: 60px; z-index: 0;">
         <div class="container-fluid py-3 d-flex justify-content-between align-items-center">
 
             <!-- Left: Title + Breadcrumb -->
