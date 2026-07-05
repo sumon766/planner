@@ -147,27 +147,6 @@ class TaskList extends Component
         session()->flash('success', 'Timer stopped');
     }
 
-    public function stopAllTimers()
-    {
-        $entries = TaskTimeEntry::where('user_id', Auth::id())
-            ->whereNull('ended_at')
-            ->get();
-
-        foreach ($entries as $entry) {
-            $entry->update([
-                'ended_at' => now(),
-                'duration_seconds' => now()->diffInSeconds($entry->started_at),
-            ]);
-        }
-
-        $this->runningTimer = null;
-        $this->timerSeconds = 0;
-        $this->activeTaskId = null;
-
-        $this->dispatch('timer-stopped');
-        session()->flash('success', 'All timers stopped');
-    }
-
     private function ensureParentTracking($parentId, $childEntry)
     {
         // Check if parent has a running timer

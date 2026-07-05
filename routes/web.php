@@ -11,13 +11,33 @@ Route::middleware(['auth'])->group(function () {
     Route::view('profile', 'profile')->name('profile');
 
     //Routine Task Routes
-    Route::get('/routine-tasks', function () {
-        return view('routine-tasks.index');
-    })->name('routine-tasks.index');
+    /*
+|--------------------------------------------------------------------------
+| Routine Tasks
+|--------------------------------------------------------------------------
+*/
 
-    Route::get('/routine-tasks/create', function () {
-        return view('routine-tasks.create');
-    })->name('routine-tasks.create');
+    Route::prefix('routine-tasks')
+        ->name('routine-tasks.')
+        ->group(function () {
+
+            Route::view('/', 'routine-tasks.index')
+                ->name('index');
+
+            Route::view('/create', 'routine-tasks.create')
+                ->name('create');
+
+            Route::get('/{routineTask}/edit', function (RoutineTask $routineTask) {
+
+                abort_unless($routineTask->user_id === Auth::id(), 403);
+
+                return view('routine-tasks.edit', [
+                    'routineTask' => $routineTask,
+                ]);
+
+            })->name('edit');
+
+    });
 });
 
 Route::post('/logout', function () {
