@@ -114,7 +114,7 @@ class TaskList extends Component
         $this->showTimerModal = false;
 
         $this->dispatch('timer-started', taskId: $task->id);
-        session()->flash('success', "Timer started for '{$task->title}'");
+        flash()->success("Timer started for '{$task->title}'");
     }
 
     public function stopTimer($entryId = null)
@@ -144,7 +144,7 @@ class TaskList extends Component
         $this->activeTaskId = null;
 
         $this->dispatch('timer-stopped');
-        session()->flash('success', 'Timer stopped');
+        flash()->warning("Timer stopped");
     }
 
     private function ensureParentTracking($parentId, $childEntry)
