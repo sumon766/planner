@@ -59,7 +59,7 @@
 
             @foreach($tasks as $task)
 
-                <div class="col-lg-6">
+                <div class="col-lg-12">
 
                     @include(
                         'livewire.routine-tasks.partials.task-card',
