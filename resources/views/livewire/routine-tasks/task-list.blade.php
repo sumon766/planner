@@ -1,24 +1,7 @@
-<div>
+<div class="container-xl py-4">
 
-    {{-- Flash Message --}}
-    @if(session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show mb-4">
-            {{ session('success') }}
-
-            <button
-                class="btn-close"
-                data-bs-dismiss="alert">
-            </button>
-        </div>
-    @endif
-
-
-    {{-- Running Session --}}
-    @include('livewire.routine-tasks.partials.running-session')
-
-
-    {{-- Page Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    {{-- Header --}}
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5">
 
         <div>
 
@@ -26,28 +9,26 @@
                 Routine Tasks
             </h2>
 
-            <p class="text-muted mb-0">
+            <p class="text-secondary mb-0">
                 Organize your daily routines and track work sessions.
             </p>
 
         </div>
 
-        <div>
+        <a
+            href="{{ route('routine-tasks.create') }}"
+            class="btn btn-primary rounded-pill px-4">
 
-            <a
-                href="{{ route('routine-tasks.create') }}"
-                class="btn btn-primary">
+            <i class="fa-solid fa-plus me-2"></i>
 
-                <i class="fa-solid fa-plus me-2"></i>
+            New Routine
 
-                New Routine
-
-            </a>
-
-        </div>
+        </a>
 
     </div>
 
+    {{-- Running Session --}}
+    @include('livewire.routine-tasks.partials.running-session')
 
     @if($tasks->isEmpty())
 
@@ -55,28 +36,31 @@
 
     @else
 
-        <div class="row g-4">
+        @php
+            $activeTasks = $tasks->where('is_active', true)->count();
+            $subtaskCount = $tasks->sum(fn ($task) => ($subtasks[$task->id] ?? collect())->count());
+        @endphp
+
+        {{-- Task List --}}
+        <div class="d-flex flex-column gap-4">
 
             @foreach($tasks as $task)
 
-                <div class="col-lg-12">
-
-                    @include(
-                        'livewire.routine-tasks.partials.task-card',
-                        [
-                            'task' => $task,
-                            'subtasks' => $subtasks[$task->id] ?? collect(),
-                        ]
-                    )
-
-                </div>
+                @include(
+                    'livewire.routine-tasks.partials.task-card',
+                    [
+                        'task' => $task,
+                        'subtasks' => $subtasks[$task->id] ?? collect(),
+                        'runningTimer' => $runningTimer,
+                        'timerSeconds' => $timerSeconds,
+                    ]
+                )
 
             @endforeach
 
         </div>
 
     @endif
-
 
     @include('livewire.routine-tasks.partials.delete-modal')
 

@@ -1,76 +1,61 @@
 @if($runningTimer)
 
-    <div class="card border-success shadow-sm mb-4">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-5">
 
-        <div class="card-body">
+        <div class="card-body p-0">
 
-            <div class="row align-items-center">
+            <div class="row g-0 align-items-center">
 
                 {{-- Left --}}
-                <div class="col-lg-8">
+                <div class="col-lg-8 p-4 p-lg-5">
 
-                    <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center gap-2 mb-4">
 
-                        <span class="badge bg-success me-2">
-                            LIVE
-                        </span>
+                    <span class="badge bg-success rounded-pill px-3 py-2">
 
-                        <h5 class="mb-0 fw-semibold">
+                        <i class="fa-solid fa-circle fa-2xs me-2"></i>
 
-                            Current Work Session
+                        LIVE SESSION
 
-                        </h5>
+                    </span>
+
+                        <span class="text-success small fw-semibold">
+
+                        Focus Mode Enabled
+
+                    </span>
 
                     </div>
 
+                    <h2 class="fw-bold mb-2">
 
-                    <div class="row">
+                        {{ $runningTimer->task->parent?->title ?? $runningTimer->task->title }}
 
-                        <div class="col-md-6 mb-3">
+                    </h2>
 
-                            <small class="text-muted d-block">
-                                Main Task
-                            </small>
+                    @if($runningTimer->task->parent)
 
-                            <div class="fw-semibold">
+                        <div class="text-secondary fs-5 mb-4">
 
-                                {{ $runningTimer->task->parent?->title ?? $runningTimer->task->title }}
+                            <i class="fa-solid fa-arrow-turn-down me-2"></i>
 
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-md-6 mb-3">
-
-                            <small class="text-muted d-block">
-                                Current Activity
-                            </small>
-
-                            <div class="fw-semibold">
-
-                                @if($runningTimer->task->parent)
-
-                                    {{ $runningTimer->task->title }}
-
-                                @else
-
-                                    —
-
-                                @endif
-
-                            </div>
+                            {{ $runningTimer->task->title }}
 
                         </div>
 
+                    @endif
 
-                        <div class="col-md-6">
+                    <div class="row g-4">
 
-                            <small class="text-muted d-block">
-                                Started At
-                            </small>
+                        <div class="col-auto">
 
-                            <div>
+                            <div class="text-secondary small">
+
+                                Started
+
+                            </div>
+
+                            <div class="fw-semibold">
 
                                 {{ $runningTimer->started_at->format('h:i A') }}
 
@@ -78,18 +63,33 @@
 
                         </div>
 
+                        <div class="col-auto">
 
-                        <div class="col-md-6">
+                            <div class="text-secondary small">
 
-                            <small class="text-muted d-block">
-                                Elapsed Time
-                            </small>
+                                Status
 
-                            <div
-                                class="fw-bold text-success"
-                                wire:poll.1s="refreshRunningTimer">
+                            </div>
 
-                                {{ $this->getTimerDisplay($timerSeconds) }}
+                            <div class="fw-semibold text-success">
+
+                                Working
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-auto">
+
+                            <div class="text-secondary small">
+
+                                Date
+
+                            </div>
+
+                            <div class="fw-semibold">
+
+                                {{ now()->format('d M Y') }}
 
                             </div>
 
@@ -99,19 +99,36 @@
 
                 </div>
 
-
                 {{-- Right --}}
-                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <div class="col-lg-4">
 
-                    <button
-                        class="btn btn-danger"
-                        wire:click="stopTimer">
+                    <div class="h-100 d-flex flex-column justify-content-center align-items-center bg-light p-5">
 
-                        <i class="fa-solid fa-stop me-2"></i>
+                        <div
+                                wire:poll.1s="refreshRunningTimer"
+                                class="display-4 fw-bold text-success">
 
-                        End Session
+                            {{ $this->getTimerDisplay($timerSeconds) }}
 
-                    </button>
+                        </div>
+
+                        <div class="text-secondary mt-2">
+
+                            Elapsed Time
+
+                        </div>
+
+                        <button
+                                wire:click="stopTimer"
+                                class="btn btn-danger rounded-pill px-4 mt-4">
+
+                            <i class="fa-solid fa-stop me-2"></i>
+
+                            End Session
+
+                        </button>
+
+                    </div>
 
                 </div>
 

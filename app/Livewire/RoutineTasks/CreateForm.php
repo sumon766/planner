@@ -158,7 +158,7 @@ class CreateForm extends Component
         $this->taskType = 'main';
         $this->is_active = true;
 
-        session()->flash('success', 'Routine task created successfully.');
+        flash()->success('Routine task created successfully.');
     }
 
     public function render()

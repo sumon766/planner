@@ -1,173 +1,275 @@
-<div class="card border-0 shadow-sm h-100">
+@php
+    $days = [
+        'mon' => 'Mon',
+        'tue' => 'Tue',
+        'wed' => 'Wed',
+        'thu' => 'Thu',
+        'fri' => 'Fri',
+        'sat' => 'Sat',
+        'sun' => 'Sun',
+    ];
 
-    {{-- Card Header --}}
-    <div class="card-header bg-white border-bottom">
+    $dayColors = [
+        'mon' => 'primary',
+        'tue' => 'success',
+        'wed' => 'warning',
+        'thu' => 'info',
+        'fri' => 'danger',
+        'sat' => 'secondary',
+        'sun' => 'dark',
+    ];
 
-        <div class="d-flex justify-content-between align-items-start">
+    $weekdays = $task->weekdays ?? [];
 
-            <div>
+    $hasSubtasks = $subtasks->isNotEmpty();
 
-                <h5 class="fw-bold mb-1">
+    $isTaskRunning = $runningTimer &&
+        $runningTimer->routine_task_id == $task->id;
 
-                    {{ $task->title }}
+    $isChildRunning = $runningTimer &&
+        $runningTimer->parent_task_id == $task->id;
+@endphp
 
-                </h5>
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 main-task-card">
 
-                @if($task->description)
+    <div class="card-body p-4">
 
-                    <small class="text-muted">
+        {{-- Header --}}
+        <div class="d-flex justify-content-between align-items-start gap-4">
 
-                        {{ $task->description }}
+            <div class="flex-grow-1">
 
-                    </small>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+
+                    <h5 class="fw-bold mb-0">
+
+                        {{ $task->title }}
+
+                    </h5>
+
+                    <span
+                        class="badge rounded-pill
+                        bg-{{ $task->is_active ? 'success' : 'secondary' }}-subtle
+                        text-{{ $task->is_active ? 'success' : 'secondary' }}">
+
+                        <i class="fa-solid {{ $task->is_active ? 'fa-circle-check' : 'fa-circle-pause' }} me-1"></i>
+
+                        {{ $task->is_active ? 'Active' : 'Paused' }}
+
+                    </span>
+
+                </div>
+
+                <p class="text-secondary small mt-3 mb-0">
+
+                    {{ $task->description ?: 'Stay consistent by completing this routine regularly and breaking it down into smaller actionable subtasks.' }}
+
+                </p>
+
+            </div>
+
+            <div class="text-end">
+
+                @if($hasSubtasks)
+
+                    @if($isChildRunning)
+
+                        {{-- Live timer while a subtask is running --}}
+                        <div
+                            class="fw-semibold text-success"
+                            wire:poll.1s="refreshRunningTimer">
+
+                            <i class="fa-regular fa-clock me-1"></i>
+
+                            {{ $this->getTimerDisplay($timerSeconds) }}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            Working on {{ $runningTimer->task->title }}
+
+                        </small>
+
+                    @else
+
+                        @php
+                            $today = $this->getParentTodayTime($task->id);
+                        @endphp
+
+                        @if($today)
+
+                            <div class="fw-semibold text-primary">
+
+                                <i class="fa-regular fa-clock me-1"></i>
+
+                                {{ $this->getTimerDisplay($today) }}
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                Today
+
+                            </small>
+
+                        @else
+
+                            <small class="text-muted">
+
+                                No work today
+
+                            </small>
+
+                        @endif
+
+                    @endif
+
+                @else
+
+                    @if($isTaskRunning)
+
+                        <div
+                            class="fw-semibold text-success mb-2"
+                            wire:poll.1s="refreshRunningTimer">
+
+                            <i class="fa-regular fa-clock me-1"></i>
+
+                            {{ $this->getTimerDisplay($timerSeconds) }}
+
+                        </div>
+
+                        <button
+                            wire:click="stopTimer"
+                            class="btn btn-sm btn-outline-danger rounded-pill">
+
+                            <i class="fa-solid fa-stop me-1"></i>
+
+                            End Session
+
+                        </button>
+
+                    @else
+
+                        @php
+                            $today = $this->getParentTodayTime($task->id);
+                        @endphp
+
+                        @if($today)
+                            <div class="d-flex">
+                                <div class="fw-semibold text-primary" style="margin-right: 5px">
+                                    <i class="fa-regular fa-clock me-1"></i>
+                                    {{ $this->formatDuration($today) }}
+                                </div>
+                                <p class="text-muted d-block mb-2">(Today)</p>
+                            </div>
+                        @endif
+
+                        <button
+                            wire:click="confirmStartTimer({{ $task->id }})"
+                            class="btn btn-success btn-sm rounded-pill"
+                            @disabled(!$task->is_active)>
+
+                            <i class="fa-solid fa-play me-1"></i>
+
+                            Start Session
+
+                        </button>
+
+                    @endif
 
                 @endif
 
             </div>
 
-            <span class="badge bg-{{ $task->is_active ? 'success' : 'secondary' }}">
-
-                {{ $task->is_active ? 'Active' : 'Inactive' }}
-
-            </span>
-
         </div>
 
-    </div>
-
-
-    {{-- Card Body --}}
-    <div class="card-body">
-
         {{-- Schedule --}}
-        <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
 
-            <div class="small text-muted mb-2">
+            <div class="d-flex flex-wrap gap-2">
 
-                Schedule
+                @forelse($weekdays as $day)
 
-            </div>
-
-            @php
-
-                $days = [
-                    'mon'=>'Mon',
-                    'tue'=>'Tue',
-                    'wed'=>'Wed',
-                    'thu'=>'Thu',
-                    'fri'=>'Fri',
-                    'sat'=>'Sat',
-                    'sun'=>'Sun',
-                ];
-
-                $weekdays = $task->weekdays ?? [];
-
-            @endphp
-
-            @if(count($weekdays))
-
-                @foreach($weekdays as $day)
-
-                    <span class="badge bg-light text-dark border me-1 mb-1">
+                    <span
+                        class="badge rounded-pill
+                        bg-{{ $dayColors[$day] }}-subtle
+                        text-{{ $dayColors[$day] }}
+                        px-3 py-2">
 
                         {{ $days[$day] }}
 
                     </span>
 
-                @endforeach
+                @empty
 
-            @else
+                    <span class="text-muted small">
 
-                <span class="text-muted">
+                        No schedule assigned
 
-                    No schedule assigned
+                    </span>
 
-                </span>
+                @endforelse
 
-            @endif
+            </div>
 
-        </div>
+            <div class="btn-group">
 
+                <a
+                    href="{{ route('routine-tasks.edit', $task) }}"
+                    class="btn btn-light btn-sm">
 
-        {{-- Actions --}}
-        <div class="d-flex flex-wrap gap-2 mb-4">
+                    <i class="fa-solid fa-pen"></i>
 
-            @if($runningTimer && $runningTimer->routine_task_id == $task->id)
+                </a>
 
                 <button
-                    class="btn btn-danger btn-sm"
-                    wire:click="stopTimer">
+                    wire:click="toggleStatus({{ $task->id }})"
+                    class="btn btn-light btn-sm">
 
-                    <i class="fa-solid fa-stop me-1"></i>
-
-                    End Session
+                    <i class="fa-solid {{ $task->is_active ? 'fa-pause' : 'fa-play' }}"></i>
 
                 </button>
 
-            @else
-
                 <button
-                    class="btn btn-success btn-sm"
-                    wire:click="startTimer({{ $task->id }})"
-                    @disabled(!$task->is_active)>
+                    wire:click="confirmDelete({{ $task->id }})"
+                    class="btn btn-light btn-sm text-danger">
 
-                    <i class="fa-solid fa-play me-1"></i>
-
-                    Start Session
+                    <i class="fa-solid fa-trash"></i>
 
                 </button>
 
-            @endif
-
-            <a
-                href="{{ route('routine-tasks.edit',$task) }}"
-                class="btn btn-outline-primary btn-sm">
-
-                <i class="fa-solid fa-pen me-1"></i>
-
-                Edit
-
-            </a>
-
-            <button
-                class="btn btn-outline-warning btn-sm"
-                wire:click="toggleStatus({{ $task->id }})">
-
-                <i class="fa-solid {{ $task->is_active ? 'fa-pause' : 'fa-play' }} me-1"></i>
-
-                {{ $task->is_active ? 'Disable' : 'Enable' }}
-
-            </button>
-
-            <button
-                class="btn btn-outline-danger btn-sm"
-                wire:click="confirmDelete({{ $task->id }})">
-
-                <i class="fa-solid fa-trash me-1"></i>
-
-                Delete
-
-            </button>
+            </div>
 
         </div>
-
-
-        <hr>
 
         {{-- Subtasks --}}
-        <div>
+        @if($hasSubtasks)
+
+            <hr class="my-4">
 
             <div class="d-flex justify-content-between align-items-center mb-3">
 
-                <h6 class="fw-semibold mb-0">
+                <div>
 
-                    Subtasks
+                    <h6 class="fw-semibold mb-0">
 
-                </h6>
+                        Subtasks
+
+                    </h6>
+
+                    <small class="text-muted">
+
+                        {{ $subtasks->count() }}
+                        {{ \Illuminate\Support\Str::plural('item', $subtasks->count()) }}
+
+                    </small>
+
+                </div>
 
                 <a
-                    href="{{ route('routine-tasks.create',['parent'=>$task->id]) }}"
-                    class="btn btn-sm btn-outline-success">
+                    href="{{ route('routine-tasks.create', ['parent' => $task->id]) }}"
+                    class="btn btn-light btn-sm rounded-pill">
 
                     <i class="fa-solid fa-plus me-1"></i>
 
@@ -177,40 +279,14 @@
 
             </div>
 
-            @if($subtasks->count())
+            @foreach($subtasks as $subtask)
 
-                <div class="list-group list-group-flush">
+                @include('livewire.routine-tasks.partials.subtask-item', [
+                    'subtask' => $subtask
+                ])
 
-                    @foreach($subtasks as $subtask)
-
-                        @include(
-                            'livewire.routine-tasks.partials.subtask-item',
-                            [
-                                'subtask'=>$subtask
-                            ]
-                        )
-
-                    @endforeach
-
-                </div>
-
-            @else
-
-                <div class="text-center py-4 text-muted">
-
-                    <i class="fa-regular fa-folder-open fa-2x mb-3"></i>
-
-                    <div>
-
-                        No subtasks created.
-
-                    </div>
-
-                </div>
-
-            @endif
-
-        </div>
+            @endforeach
+        @endif
 
     </div>
 
