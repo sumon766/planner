@@ -85,12 +85,12 @@
         <div class="collapse ps-3 {{ request()->routeIs('extra-tasks.*') ? 'show' : '' }}"
              id="extraTasksMenu">
 
-            <a href="#" class="sidebar-sublink {{ request()->routeIs('extra-tasks.index') ? 'active' : '' }}">
+            <a href="{{ route('extra-tasks.index') }}" class="sidebar-sublink {{ request()->routeIs('extra-tasks.index') ? 'active' : '' }}">
                 <i class="fa-regular fa-circle me-2"></i>
                 All Extra Tasks
             </a>
 
-            <a href="#" class="sidebar-sublink {{ request()->routeIs('extra-tasks.create') ? 'active' : '' }}">
+            <a href="{{ route('extra-tasks.create') }}" class="sidebar-sublink {{ request()->routeIs('extra-tasks.create') ? 'active' : '' }}">
                 <i class="fa-solid fa-plus me-2"></i>
                 Add New Task
             </a>

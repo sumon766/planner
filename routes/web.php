@@ -20,12 +20,15 @@ Route::middleware(['auth'])->group(function () {
         ->name('routine-tasks.')
         ->group(function () {
 
+            // List
             Route::view('/', 'routine-tasks.index')
                 ->name('index');
 
+            // Create
             Route::view('/create', 'routine-tasks.create')
                 ->name('create');
 
+            // Edit
             Route::get('/{task}/edit', function (RoutineTask $task) {
 
                 abort_unless($task->user_id === Auth::id(), 403);
