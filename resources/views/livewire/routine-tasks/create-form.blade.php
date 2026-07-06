@@ -49,10 +49,6 @@
                 placeholder="Optional description..."></textarea>
         </div>
 
-
-        <hr class="my-4">
-
-
         {{-- Task Type --}}
         <div class="mb-4">
 
@@ -136,9 +132,43 @@
 
         @endif
 
+        {{-- Sort Order --}}
+        <div class="mb-4">
 
-        <hr class="my-4">
+            <label
+                for="sort_order"
+                class="form-label fw-semibold">
 
+                Sort Order
+
+            </label>
+
+            <input
+                type="number"
+                id="sort_order"
+                min="0"
+                step="1"
+                class="form-control @error('sort_order') is-invalid @enderror"
+                wire:model.live="sort_order"
+                placeholder="0">
+
+            <div class="form-text">
+
+                Lower numbers appear first in the task list.
+
+            </div>
+
+            @error('sort_order')
+
+            <div class="invalid-feedback">
+
+                {{ $message }}
+
+            </div>
+
+            @enderror
+
+        </div>
 
         {{-- Weekdays --}}
         <div class="mb-3">

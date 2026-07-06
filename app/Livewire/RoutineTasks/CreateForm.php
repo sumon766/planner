@@ -21,6 +21,8 @@ class CreateForm extends Component
 
     public array $weekdays = [];
 
+    public int $sort_order = 0;
+
     /**
      * Parent tasks for dropdown
      */
@@ -97,7 +99,7 @@ class CreateForm extends Component
     /**
      * Save task
      */
-    public function save(): void
+    public function save()
     {
         $this->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -114,6 +116,8 @@ class CreateForm extends Component
             ],
 
             'description' => ['nullable', 'string'],
+
+            'sort_order' => ['required', 'integer', 'min:0'],
 
             'weekdays' => ['array'],
 
@@ -145,7 +149,7 @@ class CreateForm extends Component
 
             'weekdays' => $this->weekdays,
 
-            'sort_order' => 0,
+            'sort_order' => $this->sort_order,
         ]);
 
         $this->reset([
@@ -153,12 +157,14 @@ class CreateForm extends Component
             'parent_id',
             'description',
             'weekdays',
+            'sort_order',
         ]);
 
         $this->taskType = 'main';
         $this->is_active = true;
 
         flash()->success('Routine task created successfully.');
+        return redirect()->route('routine-tasks.index');
     }
 
     public function render()
