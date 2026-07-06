@@ -11,12 +11,11 @@ Route::middleware(['auth'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('profile', 'profile')->name('profile');
 
-/*
-|--------------------------------------------------------------------------
-| Routine Tasks
-|--------------------------------------------------------------------------
-*/
-
+    /*
+    |--------------------------------------------------------------------------
+    | Routine Tasks
+    |--------------------------------------------------------------------------
+    */
     Route::prefix('routine-tasks')
         ->name('routine-tasks.')
         ->group(function () {
@@ -32,6 +31,34 @@ Route::middleware(['auth'])->group(function () {
                 abort_unless($task->user_id === Auth::id(), 403);
 
                 return view('routine-tasks.edit', compact('task'));
+
+            })->name('edit');
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Extra Tasks
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('extra-tasks')
+        ->name('extra-tasks.')
+        ->group(function () {
+
+            // List
+            Route::view('/', 'extra-tasks.index')
+                ->name('index');
+
+            // Create
+            Route::view('/create', 'extra-tasks.create')
+                ->name('create');
+
+            // Edit
+            Route::get('/{task}/edit', function (ExtraTask $task) {
+
+                abort_unless($task->user_id === Auth::id(), 403);
+
+                return view('extra-tasks.edit', compact('task'));
 
             })->name('edit');
 
