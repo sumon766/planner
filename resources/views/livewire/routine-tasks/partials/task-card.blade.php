@@ -117,7 +117,7 @@
 
                             <small class="text-muted">
 
-                                No work today
+                                No work done today
 
                             </small>
 

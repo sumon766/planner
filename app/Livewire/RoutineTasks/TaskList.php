@@ -209,11 +209,16 @@ class TaskList extends Component
             return;
         }
 
+        $endedAt = now();
+
+        $duration = max(
+            0,
+            $this->runningTimer->started_at->diffInSeconds($endedAt)
+        );
+
         $this->runningTimer->update([
-            'ended_at' => now(),
-            'duration_seconds' => now()->diffInSeconds(
-                $this->runningTimer->started_at
-            ),
+            'ended_at' => $endedAt,
+            'duration_seconds' => $duration,
         ]);
 
         $this->runningTimer = null;
