@@ -12,8 +12,45 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('extra_tasks', function (Blueprint $table) {
+
             $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->string('title');
+
+            $table->text('description')
+                ->nullable();
+
+            $table->enum('status', [
+                'pending',
+                'completed',
+                'cancelled',
+            ])->default('pending');
+
+            $table->unsignedInteger('sort_order')
+                ->default(0);
+
+            $table->timestamp('completed_at')
+                ->nullable();
+
+            $table->timestamp('cancelled_at')
+                ->nullable();
+
             $table->timestamps();
+
+            $table->index([
+                'user_id',
+                'status',
+            ]);
+
+            $table->index([
+                'user_id',
+                'sort_order',
+            ]);
+
         });
     }
 
