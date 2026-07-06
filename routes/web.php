@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ExtraTask;
 use App\Models\RoutineTask;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
