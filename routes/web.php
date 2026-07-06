@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\RoutineTask;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Volt\Volt;
@@ -10,8 +11,7 @@ Route::middleware(['auth'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('profile', 'profile')->name('profile');
 
-    //Routine Task Routes
-    /*
+/*
 |--------------------------------------------------------------------------
 | Routine Tasks
 |--------------------------------------------------------------------------
@@ -27,13 +27,11 @@ Route::middleware(['auth'])->group(function () {
             Route::view('/create', 'routine-tasks.create')
                 ->name('create');
 
-            Route::get('/{routineTask}/edit', function (RoutineTask $routineTask) {
+            Route::get('/{task}/edit', function (RoutineTask $task) {
 
-                abort_unless($routineTask->user_id === Auth::id(), 403);
+                abort_unless($task->user_id === Auth::id(), 403);
 
-                return view('routine-tasks.edit', [
-                    'routineTask' => $routineTask,
-                ]);
+                return view('routine-tasks.edit', compact('task'));
 
             })->name('edit');
 

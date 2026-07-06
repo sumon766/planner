@@ -281,8 +281,15 @@
         </div>
 
 
-        {{-- Submit --}}
-        <div class="text-end">
+        {{-- Submit & Cancel --}}
+        <div class="d-flex justify-content-between align-items-center">
+
+            <a
+                href="{{ route('routine-tasks.index') }}"
+                class="btn btn-outline-secondary px-4">
+                <i class="fa-solid fa-arrow-left me-2"></i>
+                Cancel
+            </a>
 
             <button
                 class="btn btn-primary px-4"
@@ -290,11 +297,13 @@
                 wire:loading.attr="disabled">
 
                     <span wire:loading.remove>
-                        Save Routine Task
+                        <i class="fa-solid fa-check me-2"></i>
+                        Update Task
                     </span>
 
                 <span wire:loading>
-                        Saving...
+                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                        Updating...
                     </span>
 
             </button>
