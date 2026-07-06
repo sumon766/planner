@@ -1,11 +1,23 @@
-@if($showDeleteModal)
+{{--@if($showDeleteModal)--}}
 
     <div
-        class="modal fade show d-block"
+        class="modal fade {{ $showDeleteModal ? 'show' : '' }}"
         tabindex="-1"
-        style="background: rgba(0,0,0,.5);">
-
-        <div class="modal-dialog modal-dialog-centered">
+        style="
+        display: block;
+        background: rgba(0,0,0,.5);
+        opacity: {{ $showDeleteModal ? '1' : '0' }};
+        visibility: {{ $showDeleteModal ? 'visible' : 'hidden' }};
+        transition: opacity .25s ease, visibility .25s ease;
+    "
+    >
+        <div
+            class="modal-dialog modal-dialog-centered"
+            style="
+            transform: {{ $showDeleteModal ? 'translateY(0) scale(1)' : 'translateY(-20px) scale(.95)' }};
+            transition: transform .25s ease;
+        "
+        >
 
             <div class="modal-content border-0 shadow">
 
@@ -71,4 +83,4 @@
 
     </div>
 
-@endif
+{{--@endif--}}
