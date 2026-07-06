@@ -115,14 +115,39 @@ a[aria-expanded="true"] .dropdown-arrow {
     color: #6b7280;
 }
 
-/* default */
 .sidebar-toggle .arrow {
     transform: rotate(0deg);
 }
 
-/* when collapse is open */
 .sidebar-toggle[aria-expanded="true"] .arrow {
     transform: rotate(180deg);
+}
+
+.sidebar a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.sidebar-sublink.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.sidebar-toggle:not(.collapsed) .arrow {
+    transform: rotate(180deg);
+}
+
+.sidebar-toggle .arrow {
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+
+.sidebar-toggle.active-parent {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
 }
 
 .main-task-card .card{

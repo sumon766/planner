@@ -60,12 +60,15 @@ class TaskList extends Component
             ->where('user_id', Auth::id())
             ->whereNull('parent_id')
             ->orderBy('sort_order')
+            ->orderBy('title')
             ->get();
 
         $subtasks = RoutineTask::query()
             ->where('user_id', Auth::id())
             ->whereNotNull('parent_id')
+            ->orderBy('parent_id')
             ->orderBy('sort_order')
+            ->orderBy('title')
             ->get()
             ->groupBy('parent_id');
 

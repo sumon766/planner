@@ -26,7 +26,8 @@
     </div>
 
     <!-- Dashboard -->
-    <a href="{{ route('dashboard') }}">
+    <a href="{{ route('dashboard') }}"
+       class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
         <i class="fa-solid fa-gauge me-2"></i>
         Dashboard
     </a>
@@ -36,7 +37,8 @@
 
         <a href="#routineTasksMenu"
            data-bs-toggle="collapse"
-           class="d-flex justify-content-between align-items-center sidebar-toggle">
+           class="d-flex justify-content-between align-items-center sidebar-toggle
+                  {{ request()->routeIs('routine-tasks.*') ? '' : 'collapsed' }}">
 
             <span>
                 <i class="fa-solid fa-list-check me-2"></i>
@@ -46,14 +48,17 @@
             <i class="fa-solid fa-chevron-down arrow"></i>
         </a>
 
-        <div class="collapse ps-3" id="routineTasksMenu">
+        <div class="collapse ps-3 {{ request()->routeIs('routine-tasks.*') ? 'show' : '' }}"
+             id="routineTasksMenu">
 
-            <a href="{{ route('routine-tasks.index') }}" class="sidebar-sublink">
+            <a href="{{ route('routine-tasks.index') }}"
+               class="sidebar-sublink {{ request()->routeIs('routine-tasks.index') ? 'active' : '' }}">
                 <i class="fa-regular fa-circle me-2"></i>
                 All Routine Tasks
             </a>
 
-            <a href="{{ route('routine-tasks.create') }}" class="sidebar-sublink">
+            <a href="{{ route('routine-tasks.create') }}"
+               class="sidebar-sublink {{ request()->routeIs('routine-tasks.create') ? 'active' : '' }}">
                 <i class="fa-solid fa-plus me-2"></i>
                 Add New Task
             </a>
@@ -66,7 +71,8 @@
 
         <a href="#extraTasksMenu"
            data-bs-toggle="collapse"
-           class="d-flex justify-content-between align-items-center sidebar-toggle">
+           class="d-flex justify-content-between align-items-center sidebar-toggle
+                  {{ request()->routeIs('extra-tasks.*') ? '' : 'collapsed' }}">
 
             <span>
                 <i class="fa-solid fa-bolt me-2"></i>
@@ -76,14 +82,15 @@
             <i class="fa-solid fa-chevron-down arrow"></i>
         </a>
 
-        <div class="collapse ps-3" id="extraTasksMenu">
+        <div class="collapse ps-3 {{ request()->routeIs('extra-tasks.*') ? 'show' : '' }}"
+             id="extraTasksMenu">
 
-            <a href="#" class="sidebar-sublink">
+            <a href="#" class="sidebar-sublink {{ request()->routeIs('extra-tasks.index') ? 'active' : '' }}">
                 <i class="fa-regular fa-circle me-2"></i>
                 All Extra Tasks
             </a>
 
-            <a href="#" class="sidebar-sublink">
+            <a href="#" class="sidebar-sublink {{ request()->routeIs('extra-tasks.create') ? 'active' : '' }}">
                 <i class="fa-solid fa-plus me-2"></i>
                 Add New Task
             </a>
@@ -96,38 +103,40 @@
 
         <a href="#accountsMenu"
            data-bs-toggle="collapse"
-           class="d-flex justify-content-between align-items-center sidebar-toggle">
+           class="d-flex justify-content-between align-items-center sidebar-toggle
+                  {{ request()->routeIs('accounts.*') ? '' : 'collapsed' }}">
 
-        <span>
-            <i class="fa-solid fa-wallet me-2"></i>
-            Accounts
-        </span>
+            <span>
+                <i class="fa-solid fa-wallet me-2"></i>
+                Accounts
+            </span>
 
             <i class="fa-solid fa-chevron-down arrow"></i>
         </a>
 
-        <div class="collapse ps-3" id="accountsMenu">
+        <div class="collapse ps-3 {{ request()->routeIs('accounts.*') ? 'show' : '' }}"
+             id="accountsMenu">
 
             <!-- Add Expense -->
-            <a href="#" class="sidebar-sublink">
+            <a href="#" class="sidebar-sublink {{ request()->routeIs('accounts.expense') ? 'active' : '' }}">
                 <i class="fa-solid fa-money-bill-transfer me-2"></i>
                 Add Expense
             </a>
 
             <!-- Balance / Report -->
-            <a href="#" class="sidebar-sublink">
+            <a href="#" class="sidebar-sublink {{ request()->routeIs('accounts.report') ? 'active' : '' }}">
                 <i class="fa-solid fa-chart-line me-2"></i>
                 Balance / Report
             </a>
 
             <!-- Expense Category -->
-            <a href="#" class="sidebar-sublink">
+            <a href="#" class="sidebar-sublink {{ request()->routeIs('accounts.categories') ? 'active' : '' }}">
                 <i class="fa-solid fa-tags me-2"></i>
                 Expense Categories
             </a>
 
             <!-- Add Balance -->
-            <a href="#" class="sidebar-sublink">
+            <a href="#" class="sidebar-sublink {{ request()->routeIs('accounts.add-balance') ? 'active' : '' }}">
                 <i class="fa-solid fa-circle-plus me-2"></i>
                 Add Balance
             </a>
@@ -160,9 +169,9 @@
 
             <!-- Name -->
             <div class="d-flex flex-column text-start me-2">
-        <span class="fw-semibold text-dark" style="font-size: 14px;">
-            {{ Auth::user()->name }}
-        </span>
+                <span class="fw-semibold text-dark" style="font-size: 14px;">
+                    {{ Auth::user()->name }}
+                </span>
                 <small class="text-muted" style="font-size: 12px;">
                     Account
                 </small>
