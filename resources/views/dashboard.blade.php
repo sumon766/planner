@@ -2,19 +2,37 @@
 
 @section('content')
 
-    @isset($header)
-        <div class="mb-3">
-            {!! $header !!}
-        </div>
-    @endisset
+    <!-- Sticky Header -->
+    <div class="sticky-top bg-white border-bottom shadow-sm" style="top: 60px; z-index: 0;">
+        <div class="container-fluid py-3 d-flex justify-content-between align-items-center">
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
-            <h5 class="mb-2">Dashboard</h5>
-            <p class="text-muted mb-0">
-                You're logged in!
-            </p>
+            <!-- Left: Title + Breadcrumb -->
+            <div class="p-2">
+                <h5 class="fw-bold mb-0">Dashboard</h5>
+            </div>
+
+            <!-- Right: Quick hint / action -->
+            <div class="text-muted small d-none d-md-block">
+                Maintain your routine and stay productive
+            </div>
+
         </div>
+    </div>
+
+    <div class="container-fluid content-area py-4">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-12">
+
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4 p-md-5">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
 @endsection

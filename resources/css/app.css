@@ -51,7 +51,7 @@ body {
 /* Topbar */
 .topbar {
     height: 60px;
-    background: #fff;
+    background: #f9f9f9;
     border-bottom: 1px solid #e5e7eb;
     margin-left: 260px;
     display: flex;
@@ -148,6 +148,10 @@ a[aria-expanded="true"] .dropdown-arrow {
 .sidebar-toggle.active-parent {
     background-color: rgba(255, 255, 255, 0.08);
     border-radius: 8px;
+}
+
+.content-area {
+    background: #fcfcfc;
 }
 
 .main-task-card .card{
