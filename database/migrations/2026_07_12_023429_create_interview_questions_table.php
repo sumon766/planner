@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('interview_questions', function (Blueprint $table) {
             $table->id();
+
+            $table->text('question');
+            $table->longText('answer')->nullable();
+
             $table->timestamps();
         });
     }
