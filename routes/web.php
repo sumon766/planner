@@ -105,22 +105,17 @@ Route::middleware(['auth'])->group(function () {
         ->name('interview-prep.')
         ->group(function () {
 
-            // List
-            Route::view('/', 'interview-prep.index')
+            Route::view('/', 'interview-questions.index')
                 ->name('index');
 
-            // Create
-            Route::view('/create', 'interview-prep.create')
+            Route::view('/create', 'interview-questions.create')
                 ->name('create');
 
-            // Edit
             Route::get('/{question}/edit', function (InterviewQuestion $question) {
-
-                return view('interview-prep.edit', compact('question'));
-
+                return view('interview-questions.edit', compact('question'));
             })->name('edit');
 
-        });
+    });
 });
 
 Route::post('/logout', function () {

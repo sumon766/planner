@@ -5,30 +5,34 @@
 
         <label class="form-label fw-semibold">
             Categories
-            <span class="text-danger">*</span>
         </label>
 
-        <select
-            multiple
-            class="form-select @error('categories') is-invalid @enderror"
-            wire:model.live="categories">
+        <div id="category-wrapper" wire:ignore>
 
-            @foreach($categoryList as $category)
+            <select
+                id="categories"
+                class="form-select"
+                multiple
+                style="width:100%;">
 
-                <option value="{{ $category->id }}">
-                    {{ $category->name }}
-                </option>
+                @foreach($categoryList as $category)
 
-            @endforeach
+                    <option
+                        value="{{ $category->id }}"
+                        @selected(in_array($category->id, $categories))>
 
-        </select>
+                        {{ $category->name }}
 
-        <div class="form-text">
-            Hold Ctrl (Windows) or Cmd (Mac) to select multiple categories.
+                    </option>
+
+                @endforeach
+
+            </select>
+
         </div>
 
         @error('categories')
-        <div class="invalid-feedback">
+        <div class="text-danger mt-2">
             {{ $message }}
         </div>
         @enderror

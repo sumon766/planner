@@ -7,8 +7,20 @@
 
     <title>{{ config('app.name', 'Admin Panel') }}</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
     <!--Bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js">
+    </script>
 
     <!-- Vite (custom CSS/JS) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,6 +31,8 @@
     <script src="//unpkg.com/jodit@4.1.16/es2021/jodit.min.js"></script>
 
     @livewireStyles
+
+    @stack('css')
 </head>
 
 <body>
@@ -150,50 +164,53 @@
     </div>
 
     <!-- Interview Preparation -->
-    <a class="sidebar-link d-flex justify-content-between align-items-center"
-       data-bs-toggle="collapse"
-       href="#interviewPrepMenu"
-       role="button"
-       aria-expanded="{{ request()->routeIs('interview-prep.*', 'categories.*') ? 'true' : 'false' }}"
-       aria-controls="interviewPrepMenu">
+    <div class="sidebar-dropdown">
 
-    <span>
-        <i class="fa-solid fa-user-graduate me-2"></i>
-        Interview Prep
-    </span>
+        <a href="#interviewPrepMenu"
+           data-bs-toggle="collapse"
+           class="d-flex justify-content-between align-items-center sidebar-toggle
+              {{ request()->routeIs('interview-prep.*', 'categories.*') ? '' : 'collapsed' }}">
 
-        <i class="fa-solid fa-chevron-down small"></i>
-    </a>
+        <span>
+            <i class="fa-solid fa-user-graduate me-2"></i>
+            Interview Prep
+        </span>
 
-    <div class="collapse ps-3 {{ request()->routeIs('interview-prep.*', 'categories.*') ? 'show' : '' }}"
-         id="interviewPrepMenu">
-
-        <!-- Categories -->
-        <a href="{{ route('categories.index') }}"
-           class="sidebar-sublink {{ request()->routeIs('categories.*') ? 'active' : '' }}">
-
-            <i class="fa-solid fa-folder-tree me-2"></i>
-            Categories
+            <i class="fa-solid fa-chevron-down arrow"></i>
 
         </a>
 
-        <!-- Add Question -->
-        <a href="{{ route('interview-prep.create') }}"
-           class="sidebar-sublink {{ request()->routeIs('interview-prep.create') ? 'active' : '' }}">
+        <div class="collapse ps-3 {{ request()->routeIs('interview-prep.*', 'categories.*') ? 'show' : '' }}"
+             id="interviewPrepMenu">
 
-            <i class="fa-solid fa-circle-plus me-2"></i>
-            Add Question
+            <!-- Categories -->
+            <a href="{{ route('categories.index') }}"
+               class="sidebar-sublink {{ request()->routeIs('categories.*') ? 'active' : '' }}">
 
-        </a>
+                <i class="fa-solid fa-folder-tree me-2"></i>
+                Categories
 
-        <!-- List of Questions -->
-        <a href="{{ route('interview-prep.index') }}"
-           class="sidebar-sublink {{ request()->routeIs('interview-prep.index', 'interview-prep.edit') ? 'active' : '' }}">
+            </a>
 
-            <i class="fa-solid fa-list-check me-2"></i>
-            List of Questions
+            <!-- Add Question -->
+            <a href="{{ route('interview-prep.create') }}"
+               class="sidebar-sublink {{ request()->routeIs('interview-prep.create') ? 'active' : '' }}">
 
-        </a>
+                <i class="fa-solid fa-circle-plus me-2"></i>
+                Add Question
+
+            </a>
+
+            <!-- List of Questions -->
+            <a href="{{ route('interview-prep.index') }}"
+               class="sidebar-sublink {{ request()->routeIs('interview-prep.index', 'interview-prep.edit') ? 'active' : '' }}">
+
+                <i class="fa-solid fa-list-check me-2"></i>
+                List of Questions
+
+            </a>
+
+        </div>
 
     </div>
 
@@ -277,5 +294,7 @@
 </main>
 
 @livewireScripts
+
+@stack('js')
 </body>
 </html>

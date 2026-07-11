@@ -43,3 +43,29 @@
     </div>
 
 @endsection
+
+@push('js')
+    <script>
+        document.addEventListener('livewire:init', () => {
+
+            $('#categories').select2({
+                placeholder: 'Select categories',
+                width: '100%',
+                closeOnSelect: false
+            });
+
+            $('#categories').on('change', function () {
+
+                let component = Livewire.find(
+                    document.getElementById('category-wrapper')
+                        .closest('[wire\\:id]')
+                        .getAttribute('wire:id')
+                );
+
+                component.set('categories', $(this).val());
+
+            });
+
+        });
+    </script>
+@endpush

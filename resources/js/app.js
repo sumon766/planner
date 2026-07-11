@@ -1,6 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'choices.js/public/assets/styles/choices.css';
+
 
 //Timer for tasks
 document.addEventListener('livewire:init', () => {
