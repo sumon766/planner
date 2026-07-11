@@ -149,6 +149,54 @@
         </div>
     </div>
 
+    <!-- Interview Preparation -->
+    <a class="sidebar-link d-flex justify-content-between align-items-center"
+       data-bs-toggle="collapse"
+       href="#interviewPrepMenu"
+       role="button"
+       aria-expanded="{{ request()->routeIs('interview-prep.*', 'categories.*') ? 'true' : 'false' }}"
+       aria-controls="interviewPrepMenu">
+
+    <span>
+        <i class="fa-solid fa-user-graduate me-2"></i>
+        Interview Prep
+    </span>
+
+        <i class="fa-solid fa-chevron-down small"></i>
+    </a>
+
+    <div class="collapse ps-3 {{ request()->routeIs('interview-prep.*', 'categories.*') ? 'show' : '' }}"
+         id="interviewPrepMenu">
+
+        <!-- Categories -->
+        <a href="{{ route('categories.index') }}"
+           class="sidebar-sublink {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+
+            <i class="fa-solid fa-folder-tree me-2"></i>
+            Categories
+
+        </a>
+
+        <!-- Add Question -->
+        <a href="{{ route('interview-prep.create') }}"
+           class="sidebar-sublink {{ request()->routeIs('interview-prep.create') ? 'active' : '' }}">
+
+            <i class="fa-solid fa-circle-plus me-2"></i>
+            Add Question
+
+        </a>
+
+        <!-- List of Questions -->
+        <a href="{{ route('interview-prep.index') }}"
+           class="sidebar-sublink {{ request()->routeIs('interview-prep.index', 'interview-prep.edit') ? 'active' : '' }}">
+
+            <i class="fa-solid fa-list-check me-2"></i>
+            List of Questions
+
+        </a>
+
+    </div>
+
 </div>
 
 <!-- Topbar -->

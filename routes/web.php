@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Category;
 use App\Models\ExtraTask;
+use App\Models\InterviewQuestion;
 use App\Models\RoutineTask;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -67,6 +69,58 @@ Route::middleware(['auth'])->group(function () {
             })->name('edit');
 
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Categories
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('categories')
+        ->name('categories.')
+        ->group(function () {
+
+            // List
+            Route::view('/', 'categories.index')
+                ->name('index');
+
+            // Create
+            Route::view('/create', 'categories.create')
+                ->name('create');
+
+            // Edit
+            Route::get('/{category}/edit', function (Category $category) {
+
+                return view('categories.edit', compact('category'));
+
+            })->name('edit');
+
+        });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Interview Preparation
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('interview-prep')
+        ->name('interview-prep.')
+        ->group(function () {
+
+            // List
+            Route::view('/', 'interview-prep.index')
+                ->name('index');
+
+            // Create
+            Route::view('/create', 'interview-prep.create')
+                ->name('create');
+
+            // Edit
+            Route::get('/{question}/edit', function (InterviewQuestion $question) {
+
+                return view('interview-prep.edit', compact('question'));
+
+            })->name('edit');
+
+        });
 });
 
 Route::post('/logout', function () {
