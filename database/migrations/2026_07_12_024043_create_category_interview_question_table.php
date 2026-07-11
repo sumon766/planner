@@ -21,6 +21,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->primary([
                 'category_id',
                 'interview_question_id',
