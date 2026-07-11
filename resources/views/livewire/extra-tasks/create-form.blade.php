@@ -30,14 +30,13 @@
                 Description
             </label>
 
-            <textarea
-                rows="5"
-                class="form-control @error('description') is-invalid @enderror"
+            <livewire:jodit-text-editor
                 wire:model.live="description"
-                placeholder="Add any notes or details..."></textarea>
+                wire:key="description-editor-{{ $this->id ?? 'new' }}"
+            />
 
             @error('description')
-            <div class="invalid-feedback">
+            <div class="text-danger mt-2">
                 {{ $message }}
             </div>
             @enderror

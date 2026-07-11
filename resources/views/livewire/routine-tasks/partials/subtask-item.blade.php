@@ -39,7 +39,7 @@
 
                 <p class="text-secondary small mb-0">
 
-                    {{ $subtask->description ?: 'No description has been added for this subtask.' }}
+                    {!! $subtask->description !!}
 
                 </p>
 

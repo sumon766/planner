@@ -27,13 +27,13 @@
             Description
         </label>
 
-        <textarea
-            rows="5"
-            class="form-control @error('description') is-invalid @enderror"
-            wire:model.live="description"></textarea>
+        <livewire:jodit-text-editor
+            wire:model.live="description"
+            wire:key="description-editor"
+        />
 
         @error('description')
-        <div class="invalid-feedback">
+        <div class="text-danger mt-2">
             {{ $message }}
         </div>
         @enderror

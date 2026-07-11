@@ -62,7 +62,7 @@
 
                 <p class="text-secondary small mt-3 mb-0">
 
-                    {{ $task->description ?: 'Stay consistent by completing this routine regularly and breaking it down into smaller actionable subtasks.' }}
+                    {!! $task->description !!}
 
                 </p>
 

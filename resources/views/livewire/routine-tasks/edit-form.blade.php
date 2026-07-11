@@ -27,11 +27,10 @@
                 Description
             </label>
 
-            <textarea
-                class="form-control"
-                rows="4"
+            <livewire:jodit-text-editor
                 wire:model.live="description"
-                placeholder="Optional description..."></textarea>
+                wire:key="edit-description-editor-{{ $this->id ?? 'new' }}"
+            />
         </div>
 
         {{-- Task Type --}}
