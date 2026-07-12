@@ -29,17 +29,19 @@
                             @if($hasDescription)
 
                                 <button
-                                    class="accordion-button collapsed shadow-none bg-white p-0"
+                                    class="accordion-button collapsed shadow-none bg-white p-0 d-flex justify-content-between align-items-center"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapse{{ $task->id }}"
                                     aria-expanded="false">
 
-                                    <strong>
+                                    <strong class="flex-grow-1">
 
                                         {{ $task->title }}
 
                                     </strong>
+
+                                    <i class="fa-solid fa-chevron-down ms-3 accordion-icon"></i>
 
                                 </button>
 
@@ -103,7 +105,7 @@
 
                                 <a
                                     href="{{ route('extra-tasks.edit', $task) }}"
-                                    class="btn btn-light btn-sm">
+                                    class="btn btn-sm">
 
                                     <i class="fa-solid fa-pen"></i>
 
@@ -111,7 +113,7 @@
 
                                 <button
                                     wire:click="confirmDelete({{ $task->id }})"
-                                    class="btn btn-light btn-sm text-danger">
+                                    class="btn btn-sm text-danger">
 
                                     <i class="fa-solid fa-trash"></i>
 

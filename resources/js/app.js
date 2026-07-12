@@ -1,5 +1,4 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'choices.js/public/assets/styles/choices.css';
 
 
 //Timer for tasks

@@ -79,25 +79,25 @@
                 </div>
 
                 {{-- Type --}}
-                <div class="mb-3">
+{{--                <div class="mb-3">--}}
 
-                    <label class="form-label fw-semibold">
-                        Type
-                    </label>
+{{--                    <label class="form-label fw-semibold">--}}
+{{--                        Type--}}
+{{--                    </label>--}}
 
-                    <input
-                        type="text"
-                        class="form-control @error('editingType') is-invalid @enderror"
-                        wire:model.live="editingType"
-                        placeholder="Laravel, PHP, SQL, HR...">
+{{--                    <input--}}
+{{--                        type="text"--}}
+{{--                        class="form-control @error('editingType') is-invalid @enderror"--}}
+{{--                        wire:model.live="editingType"--}}
+{{--                        placeholder="Laravel, PHP, SQL, HR...">--}}
 
-                    @error('editingType')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
+{{--                    @error('editingType')--}}
+{{--                    <div class="invalid-feedback">--}}
+{{--                        {{ $message }}--}}
+{{--                    </div>--}}
+{{--                    @enderror--}}
 
-                </div>
+{{--                </div>--}}
 
                 {{-- Description --}}
                 <div class="mb-3">

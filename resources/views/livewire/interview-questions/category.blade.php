@@ -47,19 +47,19 @@
                 </div>
 
                 {{-- Type --}}
-                <div class="mb-3">
+{{--                <div class="mb-3">--}}
 
-                    <label class="form-label fw-semibold">
-                        Type
-                    </label>
+{{--                    <label class="form-label fw-semibold">--}}
+{{--                        Type--}}
+{{--                    </label>--}}
 
-                    <input
-                        type="text"
-                        class="form-control"
-                        wire:model.live="type"
-                        placeholder="Laravel, PHP, HR, SQL...">
+{{--                    <input--}}
+{{--                        type="text"--}}
+{{--                        class="form-control"--}}
+{{--                        wire:model.live="type"--}}
+{{--                        placeholder="Laravel, PHP, HR, SQL...">--}}
 
-                </div>
+{{--                </div>--}}
 
                 {{-- Description --}}
                 <div class="mb-3">

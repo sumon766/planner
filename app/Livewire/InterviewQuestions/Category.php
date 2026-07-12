@@ -102,11 +102,11 @@ class Category extends Component
                     ->where(fn ($query) => $query->where('user_id', Auth::id())),
             ],
 
-            'type' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
+//            'type' => [
+//                'nullable',
+//                'string',
+//                'max:255',
+//            ],
 
             'description' => [
                 'nullable',
@@ -138,7 +138,7 @@ class Category extends Component
 
             'slug' => Str::slug($validated['slug']),
 
-            'type' => $validated['type'],
+            'type' => 'interview-question',
 
             'description' => $validated['description'],
 
@@ -202,12 +202,6 @@ class Category extends Component
                     ->ignore($this->editingId),
             ],
 
-            'editingType' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-
             'editingDescription' => [
                 'nullable',
                 'string',
@@ -227,7 +221,7 @@ class Category extends Component
 
             'slug' => Str::slug($this->editingSlug),
 
-            'type' => $this->editingType,
+//            'type' => $this->editingType,
 
             'description' => $this->editingDescription,
 
@@ -305,6 +299,7 @@ class Category extends Component
     {
         return InterviewCategory::query()
             ->where('user_id', Auth::id())
+            ->where('type', 'interview-question')
             ->findOrFail($id);
     }
 
@@ -320,6 +315,7 @@ class Category extends Component
 
             'categories' => InterviewCategory::query()
                 ->where('user_id', Auth::id())
+                ->where('type', 'interview-question')
                 ->orderBy('name')
                 ->get(),
 

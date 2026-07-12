@@ -1,6 +1,4 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
-@import "choices.js/public/assets/styles/choices.css";
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Base */
@@ -207,4 +205,16 @@ a[aria-expanded="true"] .dropdown-arrow {
 
 .accordion-header {
     font-size: 16px;
+}
+
+.accordion-button::after {
+    display: none;
+}
+
+.accordion-icon {
+    transition: transform .25s ease;
+}
+
+.accordion-button:not(.collapsed) .accordion-icon {
+    transform: rotate(180deg);
 }

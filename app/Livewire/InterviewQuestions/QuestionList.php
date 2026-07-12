@@ -14,6 +14,10 @@ class QuestionList extends Component
 
     public string $modalMessage = '';
 
+    public string $search = '';
+
+    public ?int $selectedCategory = null;
+
     /*
     |--------------------------------------------------------------------------
     | Delete
@@ -74,15 +78,35 @@ class QuestionList extends Component
 
     public function render()
     {
-        return view('livewire.interview-questions.question-list', [
+        $questions = InterviewQuestion::query()
+            ->with('categories')
+            ->where('user_id', Auth::id())
+            ->when($this->search, function ($query) {
+                $query->where(function ($query) {
+                    $query->where('question', 'like', "%{$this->search}%")
+                        ->orWhere('answer', 'like', "%{$this->search}%")
+                        ->orWhereHas('categories', function ($q) {
+                            $q->where('name', 'like', "%{$this->search}%");
+                        });
+                });
+            })
+            ->when($this->selectedCategory, function ($query) {
+                $query->whereHas('categories', function ($q) {
+                    $q->where('categories.id', $this->selectedCategory);
+                });
+            })
+            ->latest()
+            ->get();
 
-            'questions' => InterviewQuestion::query()
-                ->with('categories')
-                ->where('user_id', Auth::id())
-                ->orderByDesc('updated_at')
-                ->orderByDesc('created_at')
-                ->get(),
+        $categories = \App\Models\Category::query()
+            ->where('user_id', Auth::id())
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
 
-        ]);
+        return view('livewire.interview-questions.question-list', compact(
+            'questions',
+            'categories'
+        ));
     }
 }
