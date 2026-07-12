@@ -14,17 +14,6 @@ class QuestionList extends Component
 
     public string $modalMessage = '';
 
-    public function render()
-    {
-        return view('livewire.interview-questions.question-list', [
-            'questions' => InterviewQuestion::query()
-                ->with('categories')
-                ->where('user_id', Auth::id())
-                ->latest()
-                ->get(),
-        ]);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Delete
@@ -37,7 +26,7 @@ class QuestionList extends Component
 
         $this->questionToDelete = $question->id;
 
-        $this->modalMessage = "Are you sure you want to delete this question?";
+        $this->modalMessage = "Are you sure you want to delete '{$question->question}'?";
 
         $this->showDeleteModal = true;
     }
@@ -50,6 +39,7 @@ class QuestionList extends Component
 
         $question = $this->findQuestion($this->questionToDelete);
 
+        // Remove pivot records first
         $question->categories()->detach();
 
         $question->delete();
@@ -60,7 +50,7 @@ class QuestionList extends Component
             'modalMessage',
         ]);
 
-        flash()->success('Question deleted successfully.');
+        flash()->success('Interview question deleted successfully.');
     }
 
     /*
@@ -74,5 +64,25 @@ class QuestionList extends Component
         return InterviewQuestion::query()
             ->where('user_id', Auth::id())
             ->findOrFail($id);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Render
+    |--------------------------------------------------------------------------
+    */
+
+    public function render()
+    {
+        return view('livewire.interview-questions.question-list', [
+
+            'questions' => InterviewQuestion::query()
+                ->with('categories')
+                ->where('user_id', Auth::id())
+                ->orderByDesc('updated_at')
+                ->orderByDesc('created_at')
+                ->get(),
+
+        ]);
     }
 }

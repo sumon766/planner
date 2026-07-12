@@ -4,6 +4,8 @@ namespace App\Livewire\InterviewQuestions;
 
 use App\Models\Category;
 use App\Models\InterviewQuestion;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class CreateForm extends Component
@@ -15,11 +17,12 @@ class CreateForm extends Component
     public array $categories = [];
 
     /**
-     * Save question
+     * Save question.
      */
     public function save()
     {
         $this->validate([
+
             'question' => [
                 'required',
                 'string',
@@ -37,13 +40,20 @@ class CreateForm extends Component
             ],
 
             'categories.*' => [
-                'exists:categories,id',
+                Rule::exists('categories', 'id')
+                    ->where(fn ($query) => $query->where('user_id', Auth::id())),
             ],
+
         ]);
 
         $question = InterviewQuestion::create([
+
+            'user_id' => Auth::id(),
+
             'question' => trim($this->question),
+
             'answer' => trim($this->answer),
+
         ]);
 
         $question->categories()->sync($this->categories);
@@ -56,9 +66,13 @@ class CreateForm extends Component
     public function render()
     {
         return view('livewire.interview-questions.create-form', [
-            'categoryList' => Category::where('is_active', true)
+
+            'categoryList' => Category::query()
+                ->where('user_id', Auth::id())
+                ->where('is_active', true)
                 ->orderBy('name')
                 ->get(),
+
         ]);
     }
 }

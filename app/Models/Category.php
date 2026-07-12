@@ -13,6 +13,7 @@ class Category extends Model
         'type',
         'description',
         'is_active',
+        'user_id'
     ];
 
     public function interviewQuestions(): BelongsToMany

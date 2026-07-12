@@ -5,6 +5,7 @@ namespace App\Livewire\InterviewQuestions;
 use App\Models\Category;
 use App\Models\InterviewQuestion;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class EditForm extends Component
@@ -24,6 +25,7 @@ class EditForm extends Component
         $this->question = $question;
 
         $this->questionText = $question->question;
+
         $this->answer = $question->answer ?? '';
 
         $this->categories = $question
@@ -36,6 +38,7 @@ class EditForm extends Component
     public function update()
     {
         $validated = $this->validate([
+
             'questionText' => [
                 'required',
                 'string',
@@ -53,13 +56,18 @@ class EditForm extends Component
             ],
 
             'categories.*' => [
-                'exists:categories,id',
+                Rule::exists('categories', 'id')
+                    ->where(fn ($query) => $query->where('user_id', Auth::id())),
             ],
+
         ]);
 
         $this->question->update([
+
             'question' => trim($validated['questionText']),
-            'answer'   => $validated['answer'],
+
+            'answer' => trim($validated['answer'] ?? ''),
+
         ]);
 
         $this->question->categories()->sync($validated['categories']);
@@ -72,10 +80,13 @@ class EditForm extends Component
     public function render()
     {
         return view('livewire.interview-questions.edit-form', [
+
             'categoryList' => Category::query()
                 ->where('user_id', Auth::id())
+                ->where('is_active', true)
                 ->orderBy('name')
                 ->get(),
+
         ]);
     }
 }

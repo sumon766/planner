@@ -79,22 +79,10 @@ Route::middleware(['auth'])->group(function () {
         ->name('categories.')
         ->group(function () {
 
-            // List
-            Route::view('/', 'categories.index')
+            Route::view('/', 'interview-questions.category')
                 ->name('index');
 
-            // Create
-            Route::view('/create', 'categories.create')
-                ->name('create');
-
-            // Edit
-            Route::get('/{category}/edit', function (Category $category) {
-
-                return view('categories.edit', compact('category'));
-
-            })->name('edit');
-
-        });
+    });
 
     /*
     |--------------------------------------------------------------------------
