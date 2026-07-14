@@ -32,7 +32,7 @@
                 @foreach($categories as $category)
 
                     <button
-                        class="btn btn-sm {{ $selectedCategory == $category->id ? 'btn-primary' : 'btn-outline-primary' }}"
+                        class="btn btn-sm {{ $selectedCategory == $category->id ? 'btn-planner-primary' : 'btn-outline-primary' }}"
                         wire:click="$set('selectedCategory', {{ $category->id }})">
 
                         {{ $category->name }}
